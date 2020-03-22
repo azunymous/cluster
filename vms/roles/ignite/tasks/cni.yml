@@ -1,0 +1,24 @@
+---
+- name: Download name
+  set_fact:
+    _cni_download: "cni-plugins-linux-{{ go_arch }}-v{{ cni_version }}.tgz"
+
+- block:
+    - name: Download cni-plugins to local folder
+      get_url:
+        url: "https://github.com/containernetworking/plugins/releases/download/v{{ cni_version }}/cni-plugins-linux-{{ go_arch }}-v{{ cni_version }}.tgz"
+        dest: "/tmp/{{ _cni_download }}"
+        checksum: "{{ cni_checksum }}"
+
+    - name: Create target directory
+      file:
+        name: /opt/cni/bin
+        state: directory
+
+    - name: Unpack cni-plugins binaries
+      unarchive:
+        src: "/tmp/{{ _cni_download }}"
+        dest: "/opt/cni/bin"
+        creates: "/tmp/{{ _cni_download }}/bandwidth"
+        remote_src: yes
+      check_mode: false

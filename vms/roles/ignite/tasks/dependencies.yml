@@ -8,12 +8,12 @@
     reload: yes
   with_items:
     - { s: net.ipv4.ip_forward, v: 1 }
-    - { s: net.bridge.bridge-nf-call-iptables, v: 0 }
 
 - name: Load loop
   modprobe:
     name: loop
     state: present
+  changed_when: no # hack
 
 - name: Install dependencies
   apt:
@@ -22,9 +22,20 @@
       - openssh-client
       - git
       - binutils
+      - containerd
       - docker.io
       - e2fsprogs
       - mount
       - tar
       - jq
     install_recommends: no
+
+- name: Check if swap file exists
+  stat:
+    path: "/swapfile"
+  register: swap_file_check
+
+- name: Disable SWAP since kubernetes can't work with swap enabled
+  shell: |
+    swapoff -a
+  when: swap_file_check.stat.exists

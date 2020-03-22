@@ -1,0 +1,10 @@
+---
+cni_version: 0.8.2
+cni_checksum: sha256:21283754ffb953329388b5a3c52cef7d656d535292bda2d86fcdda604b482f85
+go_arch: amd64
+ignite_version: 0.6.3
+ignite:
+  - name: ignite
+    checksum: sha256:989afee66d7378b0becc852fc96b0c91681685fcbbdc517955ed0b59971461bc.
+  - name: ignited
+    checksum: sha256:80654c40d7503f3c0021d3a4b1c37018ce6d8355464dc515e0c8ecb6af1cf109.

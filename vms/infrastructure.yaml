@@ -1,0 +1,4 @@
+- name: Install all infrastructure
+  hosts: all
+
+- import_playbook: nodesets.yaml

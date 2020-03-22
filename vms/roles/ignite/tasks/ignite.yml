@@ -1,0 +1,8 @@
+---
+- name: Install ignite(d)
+  get_url:
+    url: "https://github.com/weaveworks/ignite/releases/download/v{{ ignite_version }}/{{ item.name }}-{{ go_arch }}"
+    dest: "/usr/local/bin/{{ item.name }}"
+    mode: 0755
+    checksum: "{{ item.checksum }}"
+  with_items: "{{ ignite }}"
