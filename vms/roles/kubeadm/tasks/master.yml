@@ -1,0 +1,38 @@
+- set_fact:
+    nodeset_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+- name: Get master hostname
+  shell: "ignite ps | grep k-master-0 | cut -f1"
+  register: vm_master_hostname
+  changed_when: no
+
+- name: Get master IP
+  shell: "ignite ps | grep k-master-0 | cut -f9"
+  register: vm_master_ip
+  changed_when: no
+
+- set_fact:
+    master_hostname: "{{ vm_master_hostname.stdout }}"
+- set_fact:
+    master_ip: "{{ vm_master_ip.stdout }}"
+
+- name: Start master
+  shell: "ignite start k-master-0"
+
+- name: Add kubeadm to VM
+  shell: |
+    ignite exec k-master-0 "cat > run/config.yaml <<EOF
+                            apiVersion: kubeadm.k8s.io/v1beta2
+                            kind: InitConfiguration
+                            nodeRegistration:
+                              criSocket: /run/containerd/containerd.sock
+                            ---
+                            apiVersion: kubeadm.k8s.io/v1beta2
+                            kind: ClusterConfiguration
+                            kubernetesVersion: v1.15.0
+                            controlPlaneEndpoint: {{ master_ip }}
+                            apiServer:
+                              certSANs:
+                                - {{ nodeset_ip }}
+                                - {{ nodeset_master_hostname }}
+                                - {{ kubernetes_public_hostname }}
+                            EOF"

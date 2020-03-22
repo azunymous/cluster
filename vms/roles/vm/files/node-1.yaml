@@ -1,0 +1,15 @@
+apiVersion: ignite.weave.works/v1alpha2
+kind: VM
+metadata:
+  name: k-node-1
+  uid: 12b7be13-71c8-48d9-b79d-2204fa269125
+  labels:
+    app: kubernetes
+    type: node
+spec:
+  image:
+    oci: weaveworks/ignite-kubeadm:latest
+  cpus: 1
+  diskSize: 20GB
+  memory: 3GB
+  ssh: true

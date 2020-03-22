@@ -1,0 +1,9 @@
+---
+master_vms:
+  - k-master-0
+node_vms:
+  - k-node-0
+  - k-node-1
+
+nodeset_master_hostname: bustermachine
+kubernetes_public_hostname: bustermachine.igiari.net

@@ -1,0 +1,16 @@
+apiVersion: ignite.weave.works/v1alpha2
+kind: VM
+metadata:
+  name: k-master-0
+  uid: 3c935445-d4a9-49ee-8695-1756e24db92b
+  labels:
+    app: kubernetes
+    type: master
+spec:
+  image:
+    oci: weaveworks/ignite-kubeadm:latest
+  cpus: 2
+  diskSize: 20GB
+  memory: 3GB
+  ssh: true
+---

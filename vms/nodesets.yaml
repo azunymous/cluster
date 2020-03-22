@@ -4,4 +4,6 @@
   become_method: sudo
   roles:
 #    - common
-    - ignite
+#    - ignite
+#    - vm
+    - kubeadm
