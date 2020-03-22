@@ -1,3 +1,11 @@
 ---
 - import_tasks: services.yml
-- import_tasks: resources.yml
+- include_tasks: master.yml
+  with_items: "{{ master_vms }}"
+  loop_control:
+    loop_var: vm_name
+- include_tasks: node.yml
+  with_items: "{{ node_vms }}"
+  loop_control:
+    loop_var: vm_name
+- import_tasks: haproxy.yml

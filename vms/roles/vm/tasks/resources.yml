@@ -1,9 +1,0 @@
----
-- name: Add ignite manifests
-  copy:
-    src: "{{ item }}.yaml"
-    dest: /etc/firecracker/manifests/
-  with_items:
-    - master-0
-    - node-0
-    - node-1

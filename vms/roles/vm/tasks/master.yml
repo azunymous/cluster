@@ -1,0 +1,82 @@
+- name: "Is VM {{ vm_name }} Running?"
+  shell: "ignite ps | grep -q {{ vm_name }}"
+  register: vm_running
+  # ignore_errors: true
+  failed_when: vm_running.rc != 1 and vm_running.rc != 0
+  changed_when: no
+
+- name: Run master VMs
+  shell: |
+    ignite run weaveworks/ignite-kubeadm:latest \
+        --cpus 2 \
+        --memory 2GB \
+        --size 20GB \
+        --ssh \
+        --name {{ vm_name }}
+  when: vm_running.rc != 0
+
+
+- set_fact:
+    nodeset_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+- name: Get master hostname
+  shell: "ignite ps | grep k-master-0 | cut -f1"
+  register: vm_master_hostname
+  changed_when: no
+
+- name: Get master IP
+  shell: "ignite ps | grep {{ vm_name }} | cut -f9"
+  register: vm_master_ip
+  changed_when: no
+
+- set_fact:
+    master_hostname: "{{ vm_master_hostname.stdout }}"
+- set_fact:
+    master_ip: "{{ vm_master_ip.stdout }}"
+
+- name: "Set hostname for {{ vm_name }} VM"
+  shell: "ignite exec {{ vm_name}} 'hostnamectl set-hostname {{ master_hostname }}'"
+
+- name: Add kubeadm configuration to VM
+  shell: |
+    ignite exec {{ vm_name }} "cat > /config.yaml <<EOF
+    apiVersion: kubeadm.k8s.io/v1beta2
+    kind: InitConfiguration
+    nodeRegistration:
+      criSocket: /run/containerd/containerd.sock
+    ---
+    apiVersion: kubeadm.k8s.io/v1beta2
+    kind: ClusterConfiguration
+    kubernetesVersion: v1.15.0
+    controlPlaneEndpoint: {{ master_ip }}
+    apiServer:
+      certSANs:
+        - {{ nodeset_ip }}
+        - {{ nodeset_master_hostname }}
+        - {{ kubernetes_public_hostname }}"
+
+
+- name: Check if kubeadm has already run
+  shell: "ignite exec {{ vm_name}} stat /etc/kubernetes/pki/ca.key"
+  failed_when: kubeadm_ca.rc != 1 and kubeadm_ca.rc != 0
+  changed_when: no
+  register: kubeadm_ca
+
+- name: Init master
+  shell: 'ignite exec {{ vm_name }} "kubeadm init --config /config.yaml --upload-certs"'
+  when: kubeadm_ca.rc != 0
+
+
+- name: Get join command
+  shell: 'ignite exec {{ vm_name }} "kubeadm token create --print-join-command"'
+  register: vm_join_command
+  changed_when: no
+- set_fact:
+    join_command: "{{ vm_join_command.stdout }}"
+
+# TODO make sure kubectl is installed on the nodeset
+- name: Remove old admin kubeconfig
+  file:
+    state: absent
+    path: "/root/.kube/config"
+- name: Add admin kubeconfig
+  shell: "ignite exec {{ vm_name }} 'cat /etc/kubernetes/admin.conf' > /root/.kube/config"

@@ -1,0 +1,45 @@
+#
+- name: Get all master nodes
+  shell: 'kubectl get nodes -l "node-role.kubernetes.io/master" -o jsonpath={.items[*].status.addresses[?\(@.type==\"InternalIP\"\)].address}'
+  register: master_ips
+
+- name: Create master load balancer
+  template:
+    src: loadbalance.cfg
+    dest: /loadbalance.cfg
+
+- name: Run load balancer
+  docker_container:
+    name: load-balancer
+    image: haproxy:alpine
+    detach: yes
+    volumes:
+      - /loadbalance.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      6443:443
+
+- name: Add cilium network plugin
+  shell: "kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/1.7.1/install/kubernetes/quick-install.yaml"
+
+- ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Allow Kubernetes API
+  ufw:
+    rule: allow
+    port: "6443"
+
+- name: Allow HTTP
+  ufw:
+    rule: allow
+    port: "80"
+
+- name: Allow HTTPS
+  ufw:
+    rule: allow
+    port: "443"
+
+- name: Allow everything and enable UFW
+  ufw:
+    state: "enabled"

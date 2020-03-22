@@ -1,0 +1,45 @@
+- name: "Is VM {{ vm_name }} Running?"
+  shell: "ignite ps | grep -q {{ vm_name }}"
+  register: vm_running
+  # ignore_errors: true
+  failed_when: vm_running.rc != 1 and vm_running.rc != 0
+  changed_when: no
+
+- name: Run node VMs
+  shell: |
+      ignite run weaveworks/ignite-kubeadm:latest \
+      --cpus 1 \
+      --memory 2GB \
+      --size 20GB \
+      --ssh \
+      --name {{ vm_name }}
+  when: vm_running.rc != 0
+
+- name: Get node hostname
+  shell: "ignite ps | grep {{ vm_name }} | cut -f1"
+  register: vm_node_hostname
+  changed_when: no
+
+- name: Get node IP
+  shell: "ignite ps | grep {{ vm_name }} | cut -f9"
+  register: vm_node_ip
+  changed_when: no
+
+- set_fact:
+    node_hostname: "{{ vm_node_hostname.stdout }}"
+- set_fact:
+    node_ip: "{{ vm_node_ip.stdout }}"
+
+- name: "Set hostname for {{ vm_name }} VM"
+  shell: "ignite exec {{ vm_name }} 'hostnamectl set-hostname {{ node_hostname }}'"
+
+- name: Check if node has joined master
+  shell: "kubectl get nodes -o wide | grep -q {{ node_ip }}"
+  failed_when: kubeadm_ca.rc != 1 and kubeadm_ca.rc != 0
+  changed_when: no
+  register: node_joined
+
+- name: Join master
+  shell: "ignite exec {{ vm_name }} '{{ join_command }}'"
+  when: node_joined.rc != 0
+

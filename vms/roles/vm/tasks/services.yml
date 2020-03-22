@@ -3,13 +3,3 @@
   service:
     name: containerd
     state: started
-
-- name: Install ignited as a daemon
-  copy:
-    src: ignited.service
-    dest: /etc/systemd/system/
-
-- name: Start ignited
-  service:
-    name: ignited
-    state: started
