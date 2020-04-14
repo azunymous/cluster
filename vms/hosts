@@ -1,2 +1,2 @@
-[nodeset]
-bustermachine  ansible_user=one
+[master-nodes]
+node-2 ansible_user=one

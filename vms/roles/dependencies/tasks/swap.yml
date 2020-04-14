@@ -1,0 +1,11 @@
+- name: Disable SWAP since kubernetes can't work with swap enabled
+  shell: "swapoff -a"
+  changed_when: false
+
+- name: Remove current swaps from fstab
+  lineinfile:
+    dest: /etc/fstab
+    regexp: '(?i)^([^#][\S]+\s+(none|swap)\s+swap.*)'
+    line: '# \1'
+    backrefs: yes
+    state: present

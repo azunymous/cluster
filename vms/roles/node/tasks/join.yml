@@ -1,0 +1,12 @@
+---
+
+- name: Reset Kubernetes component
+  shell: "kubeadm reset --force"
+  register: reset_cluster
+
+- name: Join to Kubernetes cluster
+  when: reset_cluster is succeeded
+  shell: {{ master_join_command }}
+  register: join_cluster
+  notify:
+    - Recreate kube-dns

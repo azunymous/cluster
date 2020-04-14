@@ -1,0 +1,17 @@
+---
+- name: Configure sysctl
+  sysctl:
+    name: "{{ item.s }}"
+    value: "{{ item.v }}"
+    sysctl_set: yes
+    state: present
+    reload: yes
+  with_items:
+    - { s: 'vm.swappiness', v: '0' }
+    - { s: net.ipv4.ip_forward, v: 1 }
+
+- name: Load loop
+  modprobe:
+    name: loop
+    state: present
+  changed_when: no # hack

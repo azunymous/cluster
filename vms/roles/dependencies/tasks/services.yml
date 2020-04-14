@@ -1,0 +1,10 @@
+---
+- name: Start containerd
+  service:
+    name: containerd
+    state: started
+
+- name: Start docker
+  service:
+    name: docker
+    state: started

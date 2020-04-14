@@ -1,0 +1,6 @@
+---
+- import_tasks: system.yml
+- import_tasks: swap.yml
+- import_tasks: firewall.yml
+- import_tasks: packages.yml
+- import_tasks: services.yml

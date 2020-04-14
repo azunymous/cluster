@@ -1,0 +1,33 @@
+- name: Install dependencies
+  apt:
+    name:
+      - dmsetup
+      - git
+      - binutils
+      - containerd
+      - docker.io
+      - e2fsprogs
+      - mount
+      - tar
+      - jq
+      - apt-transport-https
+      - curl
+    install_recommends: no
+
+- name: Add Kubernetes APT GPG key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add Kubernetes APT repository
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    filename: 'kubernetes'
+
+- name: Install kubernetes packages
+  apt:
+    name: "{{ kubernetes_packages }}"
+    update_cache: yes
+    state: present
+  with_items: "{{ kubernetes_packages }}"

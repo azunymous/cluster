@@ -36,7 +36,7 @@
 - name: "Set hostname for {{ vm_name }} VM"
   shell: "ignite exec {{ vm_name}} 'hostnamectl set-hostname {{ master_hostname }}'"
 
-- name: Add kubeadm configuration to VM
+- name: Add master configuration to VM
   shell: |
     ignite exec {{ vm_name }} "cat > /config.yaml <<EOF
     apiVersion: kubeadm.k8s.io/v1beta2
@@ -55,14 +55,14 @@
         - {{ kubernetes_public_hostname }}"
 
 
-- name: Check if kubeadm has already run
+- name: Check if master has already run
   shell: "ignite exec {{ vm_name}} stat /etc/kubernetes/pki/ca.key"
   failed_when: kubeadm_ca.rc != 1 and kubeadm_ca.rc != 0
   changed_when: no
   register: kubeadm_ca
 
 - name: Init master
-  shell: 'ignite exec {{ vm_name }} "kubeadm init --config /config.yaml --upload-certs"'
+  shell: 'ignite exec {{ vm_name }} "master init --config /config.yaml --upload-certs"'
   when: kubeadm_ca.rc != 0
 
 

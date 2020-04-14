@@ -1,0 +1,53 @@
+- ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Allow HTTP ports
+  ufw:
+    rule: allow
+    port: "80"
+
+- name: Allow HTTPS ports
+  ufw:
+    rule: allow
+    port: "443"
+
+- name: Enable UFW
+  ufw:
+    state: "enabled"
+
+
+- name: Allow Kubelet API ports
+  ufw:
+    rule: allow
+    port: "10250"
+
+- name: Allow Nodeport services ports
+  ufw:
+    rule: allow
+    port: "30000:32767"
+    proto: tcp
+- name: Allow Kubernetes API ports
+  when: "'master-nodes' in group_names"
+  ufw:
+    rule: allow
+    port: "6443"
+
+- name: Allow etcd server client API ports
+  ufw:
+    rule: allow
+    port: "2379:2380"
+    proto: tcp
+  when: "'master-nodes' in group_names"
+
+- name: Allow kube-scheduler ports
+  ufw:
+    rule: allow
+    port: "10251"
+  when: "'master-nodes' in group_names"
+
+- name: Allow kube-controller-manager ports
+  ufw:
+    rule: allow
+    port: "10252"
+  when: "'master-nodes' in group_names"
