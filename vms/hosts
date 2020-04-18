@@ -1,2 +1,4 @@
 [master-nodes]
 node-2 ansible_user=one
+[nodes]
+magicbox ansible_user=one

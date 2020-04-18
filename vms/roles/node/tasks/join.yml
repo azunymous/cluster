@@ -6,7 +6,6 @@
 
 - name: Join to Kubernetes cluster
   when: reset_cluster is succeeded
-  shell: {{ master_join_command }}
+  shell: "{{ hostvars['node-2']['join_command'] }}"
   register: join_cluster
-  notify:
-    - Recreate kube-dns
+

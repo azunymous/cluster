@@ -1,4 +1,4 @@
-- hosts: master-nodes
+- hosts: all
   remote_user: root
   become: yes
   become_method: sudo
@@ -6,7 +6,20 @@
     ansible_python_interpreter: /usr/bin/python3
   roles:
     - dependencies
+
+- hosts: master-nodes
+  remote_user: root
+  become: yes
+  become_method: sudo
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
     - master
-#    - common
-#    - ignite
-#    - vm
+- hosts: nodes
+  remote_user: root
+  become: yes
+  become_method: sudo
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - node
