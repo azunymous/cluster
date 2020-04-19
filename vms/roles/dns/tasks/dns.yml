@@ -1,0 +1,16 @@
+- set_fact:
+    dns_server_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+
+- name: Create dns configuration
+  register: dns_created
+  template:
+    src: dnsmasq.conf
+    dest: /etc/dnsmasq.d/mydns.conf
+
+- name: Enable and check kubelet service
+  when: dns_created.changed
+  systemd:
+    name: dnsmasq
+    daemon_reload: yes
+    state: restarted
+    enabled: yes

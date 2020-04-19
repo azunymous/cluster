@@ -2,6 +2,11 @@
   shell: "kubeadm reset --force"
   register: reset_cluster
 
+- name: Remove rook directory
+  file:
+    path: /var/lib/rook
+    state: absent
+
 - set_fact:
     master_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
 - name: Init Kubernetes cluster

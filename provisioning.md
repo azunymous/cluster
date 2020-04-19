@@ -46,3 +46,8 @@ network:
 ## Setup DNS or /etc/hosts file
 - Make sure localhost is accessible via hostname
 - Make sure DNS lets you access master nodes
+
+## Rook cephfs storage
+- Make sure you have a device attached for OSDs
+- It must not have a file system on it
+- The nodes should not have anything running on :9091

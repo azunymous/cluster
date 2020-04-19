@@ -1,0 +1,6 @@
+resources:
+  - common.yaml
+  - operator.yaml
+  - cluster-test.yaml
+  - storageclass.yaml
+  - storageclass-test.yaml

@@ -4,6 +4,11 @@
   shell: "kubeadm reset --force"
   register: reset_cluster
 
+- name: Remove rook directory
+  file:
+    path: /var/lib/rook
+    state: absent
+
 - name: Join to Kubernetes cluster
   when: reset_cluster is succeeded
   shell: "{{ hostvars['node-2']['join_command'] }}"
