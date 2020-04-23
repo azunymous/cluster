@@ -1,0 +1,19 @@
+- name: read the haproxy cfg file
+  shell: cat /etc/haproxy/haproxy.cfg
+  register: haproxy_cfg
+  changed_when: no
+
+- name: Add haproxy configuration
+  when: haproxy_cfg.stdout.find('{{ ansible_hostname }}') != 0
+  register: haproxy_created
+  template:
+    src: edge.cfg
+    dest: /etc/haproxy/haproxy.cfg
+
+- name: Enable and check haproxy service
+  when: haproxy_created.changed
+  systemd:
+    name: haproxy
+    daemon_reload: yes
+    state: restarted
+    enabled: yes

@@ -27,6 +27,7 @@
     rule: allow
     port: "30000:32767"
     proto: tcp
+
 - name: Allow Kubernetes API ports
   when: "'master-nodes' in group_names"
   ufw:

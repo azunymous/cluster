@@ -11,6 +11,6 @@
 
 - name: Join to Kubernetes cluster
   when: reset_cluster is succeeded
-  shell: "{{ hostvars['node-2']['join_command'] }}"
+  shell: "{{ hostvars['node-2.vv']['join_command'] }}"
   register: join_cluster
 

@@ -16,7 +16,7 @@
                  --control-plane-endpoint {{ control_plane_endpoint }} \
                  --pod-network-cidr={{ pod_cidr }} \
                  --apiserver-advertise-address {{ master_ip }} \
-                 --apiserver-cert-extra-sans "kubernetes.local,nodeset.local"
+                 --apiserver-cert-extra-sans "kubernetes.local,{{ control_plane_endpoint }}"
   register: init_cluster
 
 - name: Create Kubernetes config directory

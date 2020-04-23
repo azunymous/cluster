@@ -1,2 +1,3 @@
 - import_tasks: kube.yml
   when: "'master-nodes' in group_names"
+- import_tasks: haproxy.yml

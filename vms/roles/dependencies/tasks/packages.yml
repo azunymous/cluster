@@ -13,6 +13,7 @@
       - apt-transport-https
       - curl
       - resolvconf
+      - haproxy
     install_recommends: no
 
 - name: Add Kubernetes APT GPG key

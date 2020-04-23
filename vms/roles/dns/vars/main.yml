@@ -1,9 +1,9 @@
 ---
 dns_config:
-  - host: nodeset.local
+  - host: nodeset.vv
 #    this should eventually be a load balancer
     ip: 10.0.0.60
-  - host: magicbox
+  - host: magicbox.vv
     ip: 10.0.0.46
-  - host: node-2
+  - host: node-2.vv
     ip: 10.0.0.60
