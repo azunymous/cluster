@@ -4,6 +4,6 @@ dns_config:
 #    this should eventually be a load balancer
     ip: 10.0.0.60
   - host: magicbox
-    ip: 10.0.0.45
+    ip: 10.0.0.46
   - host: node-2
     ip: 10.0.0.60

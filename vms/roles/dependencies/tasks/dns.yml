@@ -1,0 +1,27 @@
+- name: read the resolv.conf.d head file
+  shell: cat /etc/resolvconf/resolv.conf.d/head
+  register: resolve_conf
+  changed_when: no
+
+- name: Add dns
+  when: resolve_conf.stdout.find('{{ dns_ip }}') != 0
+  register: dns_created
+  template:
+    src: head
+    dest: /etc/resolvconf/resolv.conf.d/head
+
+- name: Enable and check resolve conf service
+  when: dns_created.changed
+  systemd:
+    name: resolvconf
+    daemon_reload: yes
+    state: restarted
+    enabled: yes
+
+- name: Enable and check systemd-resolved service
+  when: dns_created.changed
+  systemd:
+    name: systemd-resolved
+    daemon_reload: yes
+    state: restarted
+    enabled: yes

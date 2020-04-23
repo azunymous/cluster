@@ -12,6 +12,7 @@
       - jq
       - apt-transport-https
       - curl
+      - resolvconf
     install_recommends: no
 
 - name: Add Kubernetes APT GPG key

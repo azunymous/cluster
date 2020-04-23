@@ -51,3 +51,12 @@ network:
 - Make sure you have a device attached for OSDs
 - It must not have a file system on it
 - The nodes should not have anything running on :9091
+
+---
+Fix ingress controller -
+Config below for HAProxy not working in backend 
+```
+   server node-2 node-2:30080
+```
+
+Fix dns provisioning to be configured via global config and scanning master/nodes

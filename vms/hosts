@@ -1,3 +1,5 @@
+[dns]
+10.0.0.10 ansible_user=pi
 [master-nodes]
 node-2 ansible_user=one
 [nodes]

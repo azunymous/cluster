@@ -7,7 +7,7 @@
     src: dnsmasq.conf
     dest: /etc/dnsmasq.d/mydns.conf
 
-- name: Enable and check kubelet service
+- name: Enable and check dnsmasq service
   when: dns_created.changed
   systemd:
     name: dnsmasq
