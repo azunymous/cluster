@@ -4,7 +4,7 @@ metadata:
   name: example-ingress
 spec:
   rules:
-  - host: nodeset.vv
+  - host: vvv.run
     http:
       paths:
       - path: /

@@ -4,7 +4,7 @@ metadata:
   name: registry
 spec:
   rules:
-    - host: registry.nodeset.vv
+    - host: registry.vvv.run
       http:
         paths:
           - path: /

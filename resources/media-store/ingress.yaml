@@ -4,7 +4,7 @@ metadata:
   name: media-store-browser
 spec:
   rules:
-    - host: media.nodeset.vv
+    - host: media.vvv.run
       http:
         paths:
           - path: /
