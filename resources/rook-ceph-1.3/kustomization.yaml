@@ -2,5 +2,8 @@ resources:
   - common.yaml
   - operator.yaml
   - cluster-test.yaml
-  - storageclass.yaml
+  - filesystem-test.yaml
+  - storageclass-fs-test.yaml
   - storageclass-test.yaml
+  - storageclass.yaml
+  - toolbox.yaml

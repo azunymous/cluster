@@ -52,6 +52,11 @@ network:
 - It must not have a file system on it
 - The nodes should not have anything running on :9091
 
+### Rook cephfs shared file system PVCs not being provisioned:
+
+- To fix `kubectl delete pod -l app=csi-cephfsplugin-provisioner --grace-period=0 --force` restarts
+the provisioning pods and creates the PVC correctly
+
 ---
 
 - Fix dns provisioning to be configured via global config and scanning master/nodes

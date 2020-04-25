@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-store-browser
+spec:
+  selector:
+    app: media-store-browser
+  ports:
+    - port: 80
