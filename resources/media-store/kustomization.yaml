@@ -7,3 +7,9 @@ resources:
   - media.yml
   - ingress.yaml
   - service.yaml
+  - sftp.yaml
+
+secretGenerator:
+  - name: sftp-config
+    files:
+      - users.conf

@@ -42,4 +42,4 @@ spec:
         - name: store
           persistentVolumeClaim:
             claimName: media-store
-            readOnly: false
+            readOnly: true

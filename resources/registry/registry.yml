@@ -8,7 +8,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: rook-cephfs
+  storageClassName: rook-cephfs-test
 ---
 apiVersion: apps/v1
 kind: Deployment

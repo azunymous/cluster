@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - hello-world.yaml
-  - kube-registry.yml
+  - registry.yml
   - media-store.yaml
+  - cd.yaml

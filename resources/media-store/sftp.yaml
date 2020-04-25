@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sftp
+  labels:
+    app: sftp
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: sftp
+      labels:
+        app: sftp
+    spec:
+      containers:
+        - name: sftp
+          image: atmoz/sftp
+          volumeMounts:
+            - name: config
+              mountPath: /etc/sftp/
+            - name: store
+              mountPath: /home/user/media
+          ports:
+            - containerPort: 22
+      volumes:
+        - name: config
+          secret:
+            secretName: sftp-config
+            items:
+              - key: users.conf
+                path: users.conf
+        - name: store
+          persistentVolumeClaim:
+            claimName: media-store
+            readOnly: false
+  selector:
+    matchLabels:
+      app: sftp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sftp
+spec:
+  selector:
+    app: sftp
+  ports:
+    - port: 22
+      nodePort: 30022
+  type: NodePort
