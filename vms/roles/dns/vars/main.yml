@@ -7,3 +7,6 @@ dns_config:
     ip: 10.0.0.46
   - host: node-2.vv
     ip: 10.0.0.60
+# ingress:
+  - host: vvv.run
+    ip: 10.0.0.60
