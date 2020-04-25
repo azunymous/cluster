@@ -7,3 +7,4 @@ spec:
     app: media-store-browser
   ports:
     - port: 80
+      targetPort: 8001

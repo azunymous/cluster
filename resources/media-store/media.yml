@@ -28,14 +28,16 @@ spec:
     spec:
       containers:
         - name: media-store-browser
-          image: nginx
+          image: pldubouilh/gossa
           resources:
             limits:
               cpu: 100m
               memory: 100Mi
           volumeMounts:
             - name: store
-              mountPath: /usr/share/nginx/html
+              mountPath: /shared/
+          ports:
+            - containerPort: 8001
       volumes:
         - name: store
           persistentVolumeClaim:
