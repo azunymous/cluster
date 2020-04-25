@@ -34,11 +34,20 @@
     mode: 0755
     remote_src: true
 
-- name: Deploy cilium pod networking
+- name: Deploy calico pod networking
   when: init_cluster is succeeded
   command: |
     kubectl --kubeconfig={{ kubeadmin_config }} \
-        apply -f https://raw.githubusercontent.com/cilium/cilium/v1.6/install/kubernetes/quick-install.yaml
+        apply -f https://docs.projectcalico.org/v3.11/manifests/calico.yaml
+  register: create_result
+  until: create_result.rc == 0
+  ignore_errors: true
+
+- name: Enable scheduling on master node
+  when: init_cluster is succeeded
+  command: |
+    kubectl --kubeconfig={{ kubeadmin_config }} \
+      taint nodes --all node-role.kubernetes.io/master-
   register: create_result
   until: create_result.rc == 0
   ignore_errors: true

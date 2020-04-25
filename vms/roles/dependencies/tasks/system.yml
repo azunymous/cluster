@@ -14,3 +14,15 @@
     name: loop
     state: present
   changed_when: no # hack
+
+- name: Check if NetworkManager is installed
+  command: which NetworkManager
+  changed_when: false
+  failed_when: networkmanager_installed.rc not in [0,1]
+  register: networkmanager_installed
+
+- name: Add network manager excludes for Calico pod CNI
+  template:
+    src: calico.conf
+    dest: /etc/NetworkManager/conf.d/calico.conf
+  when: networkmanager_installed.rc not in [ 1 ]

@@ -53,10 +53,6 @@ network:
 - The nodes should not have anything running on :9091
 
 ---
-Fix ingress controller -
-Config below for HAProxy not working in backend 
-```
-   server node-2 node-2:30080
-```
 
-Fix dns provisioning to be configured via global config and scanning master/nodes
+- Fix dns provisioning to be configured via global config and scanning master/nodes
+- Add ssl to ingress via acme

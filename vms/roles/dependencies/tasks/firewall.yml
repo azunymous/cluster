@@ -28,6 +28,11 @@
     port: "30000:32767"
     proto: tcp
 
+- name: Allow Calico BGP ports
+  ufw:
+    rule: allow
+    port: "179"
+
 - name: Allow Kubernetes API ports
   when: "'master-nodes' in group_names"
   ufw:
