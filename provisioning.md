@@ -60,4 +60,5 @@ the provisioning pods and creates the PVC correctly
 ---
 
 - Fix dns provisioning to be configured via global config and scanning master/nodes
+- Allow for multiple masters (high availability)
 - Add ssl to ingress via acme

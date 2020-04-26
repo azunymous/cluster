@@ -1,0 +1,8 @@
+- hosts: master-nodes, nodes
+  remote_user: root
+  become: yes
+  become_method: sudo
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - clear

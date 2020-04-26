@@ -1,0 +1,4 @@
+- name: Clear kubernetes
+  hosts: all
+
+- import_playbook: remove-nodesets.yaml

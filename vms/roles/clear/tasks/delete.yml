@@ -1,0 +1,26 @@
+- name: Stop kubelet service
+  systemd:
+    name: kubelet
+    daemon_reload: yes
+    state: stopped
+    enabled: yes
+
+- name: Remove kubernetes directory
+  file:
+    path: /etc/kubernetes/
+    state: absent
+
+- name: Reset Kubernetes component
+  shell: "kubeadm reset --force"
+  register: reset_cluster
+
+- name: Remove rook directory
+  file:
+    path: /var/lib/rook
+    state: absent
+
+- name: Remove etcd directory
+  file:
+    path: /var/lib/etcd
+    state: absent
+

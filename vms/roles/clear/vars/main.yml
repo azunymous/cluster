@@ -1,0 +1,7 @@
+
+kubernetes_version: 1.18.0
+control_plane_endpoint: nodeset.vv
+# cilium requirement
+pod_cidr: 192.168.0.0/16
+
+kubeadmin_config: "/etc/kubernetes/admin.conf"

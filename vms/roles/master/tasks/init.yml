@@ -51,3 +51,15 @@
   register: create_result
   until: create_result.rc == 0
   ignore_errors: true
+
+- name: Install linkerd CLI
+  when: init_cluster is succeeded
+  shell: "curl -sL https://run.linkerd.io/install | sh"
+
+- name: Deploy linkerd service mesh
+  when: init_cluster is succeeded
+  shell: "$HOME/.linkerd2/bin/linkerd  --kubeconfig={{ kubeadmin_config }} install | kubectl apply --kubeconfig={{ kubeadmin_config }} -f -"
+
+- name: Check linkerd service mesh
+  when: init_cluster is succeeded
+  command: "$HOME/.linkerd2/bin/linkerd --kubeconfig={{ kubeadmin_config }} check"
