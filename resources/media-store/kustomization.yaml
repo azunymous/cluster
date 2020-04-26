@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: media-store
 
 resources:
+  - pvc.yaml
   - media.yml
   - ingress.yaml
   - service.yaml
