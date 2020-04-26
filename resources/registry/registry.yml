@@ -13,20 +13,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kube-registry
+  name: registry
   labels:
-    k8s-app: kube-registry
-    kubernetes.io/cluster-service: "true"
+    app: registry
 spec:
   replicas: 3
   selector:
     matchLabels:
-      k8s-app: kube-registry
+      app: registry
   template:
     metadata:
       labels:
-        k8s-app: kube-registry
-        kubernetes.io/cluster-service: "true"
+        app: registry
     spec:
       containers:
         - name: registry
