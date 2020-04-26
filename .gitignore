@@ -3,3 +3,4 @@
 /.blackbox/pubring.kbx~
 /.blackbox/secring.gpg
 /resources/media-store/users.conf
+/resources/longhorn/auth

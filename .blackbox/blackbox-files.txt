@@ -1,1 +1,2 @@
+resources/longhorn/auth
 resources/media-store/users.conf
