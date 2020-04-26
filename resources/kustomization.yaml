@@ -3,9 +3,7 @@ kind: Kustomization
 
 resources:
   - namespaces
-  - registry
   - nginx-ingress
   - hello-world
   - rook-ceph-1.3
   - tekton
-  - media-store
