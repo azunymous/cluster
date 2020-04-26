@@ -6,3 +6,4 @@
 /resources/longhorn/auth
 /resources/cert-manager/issuer.yml
 /resources/cert-manager/issuer-prod.yml
+/resources/linkerd-support/auth

@@ -1,4 +1,5 @@
 resources/cert-manager/issuer-prod.yml
 resources/cert-manager/issuer.yml
+resources/linkerd-support/auth
 resources/longhorn/auth
 resources/media-store/users.conf
