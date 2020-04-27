@@ -28,6 +28,7 @@ spec:
         - /kaniko/executor
       args:
         -  --cache=true
+        - --cache-repo=registry.vvv.run/cache
         - --dockerfile=$(params.pathToDockerFile)
         - --destination=$(resources.outputs.builtImage.url)
         - --context=$(params.pathToContext)
