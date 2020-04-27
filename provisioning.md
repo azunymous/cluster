@@ -47,6 +47,21 @@ network:
 - Make sure localhost is accessible via hostname
 - Make sure DNS lets you access master nodes
 
+## Add ssl to ingress via ACME
+As this is an internal cluster (for now), the easier way to use `cert-manager` and Let's Encrypt
+ACME is to make it temporarily public, register all required certs and then make it private again
+afterward. This also requires disabling hsts if you create a certificate for your root FQDN.
+
+The, more proper solution is to use the DNS01 challenge feature of cert-manager. However, this 
+requires setting up authentication. 
+
+---
+
+- Fix dns provisioning to be configured via global config and scanning master/nodes
+- Allow for multiple masters (high availability)
+
+---
+## Unused
 ## Rook cephfs storage
 - Make sure you have a device attached for OSDs
 - It must not have a file system on it
@@ -56,9 +71,3 @@ network:
 
 - To fix `kubectl delete pod -l app=csi-cephfsplugin-provisioner --grace-period=0 --force` restarts
 the provisioning pods and creates the PVC correctly
-
----
-
-- Fix dns provisioning to be configured via global config and scanning master/nodes
-- Allow for multiple masters (high availability)
-- Add ssl to ingress via acme
