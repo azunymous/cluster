@@ -1,4 +1,6 @@
 .idea
+tmp
+service-account.json
 /.blackbox/pubring.gpg~
 /.blackbox/pubring.kbx~
 /.blackbox/secring.gpg
@@ -7,3 +9,5 @@
 /resources/cert-manager/issuer.yml
 /resources/cert-manager/issuer-prod.yml
 /resources/linkerd-support/auth
+/resources/velero/velero.yml
+/resources/velero/restic.env
