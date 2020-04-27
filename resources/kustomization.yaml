@@ -12,4 +12,5 @@ resources:
   - registry-nfs
   - registry
   - media-nfs
+  - media-store
   - tekton
