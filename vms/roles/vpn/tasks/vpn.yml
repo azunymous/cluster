@@ -1,0 +1,36 @@
+- set_fact:
+    vpn_server_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+
+
+- name: get service facts
+  service_facts:
+
+- set_fact:
+   vpn: "yes"
+- set_fact:
+    vpn: "no"
+  when: ansible_facts.services["wg-quick@wg0.service"] is not defined
+
+# Gather IP facts from ipify.org
+- name: Get my public
+  when: vpn == "no"
+  ipify_facts:
+  register: public_ip
+
+- name: Download PiVPN
+  when: vpn == "no"
+  get_url:
+    url: https://install.pivpn.io
+    dest: /opt/install.sh
+    mode: '7550'
+
+- name: Copy options
+  when: vpn == "no"
+  template:
+    src: options.conf
+    dest: /opt/options.conf
+
+- name: Install PiVPN
+  when: vpn == "no"
+  shell: "/opt/install.sh --unattended /opt/options.conf"
+
