@@ -1,0 +1,42 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: deploy-using-kustomize-kubectl
+spec:
+  params:
+    - name: path
+      type: string
+      description: Path to the kustomize folder (containing a deployment.yaml)
+    - name: yamlPathToImage
+      type: string
+      description: |
+        The path to the image to replace in the yaml manifest (arg to yq)
+  resources:
+    inputs:
+      - name: source
+        type: git
+      - name: image
+        type: image
+  steps:
+    - name: replace-image
+      image: mikefarah/yq
+      command: ["yq"]
+      args:
+        - "w"
+        - "-i"
+        - "$(params.path)/deployment.yaml"
+        - "$(params.yamlPathToImage)"
+        - "$(resources.inputs.image.url)"
+    - name: kustomize-build
+      image: lyft/kustomizer:v3.3.0
+      script: |
+        kustomize build $1 > $1/out.yml
+      args:
+        - "$(params.path)"
+    - name: run-kubectl
+      image: lachlanevenson/k8s-kubectl
+      command: ["kubectl"]
+      args:
+        - "apply"
+        - "-f"
+        - "$(params.path)/out.yml"

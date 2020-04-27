@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: cd
+resources:
+  - tasks/echo-hello-world.yml
+  - tasks/build-docker-from-git.yml
+  - tasks/deploy-using-kubectl.yml
+  - pipelineresources/alice-git.yml
+  - pipelineresources/alice-image.yml
+  - pipeline/alice.yml
+  - roles/cd-admin.yml

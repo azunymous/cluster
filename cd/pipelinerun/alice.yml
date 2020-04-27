@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: alice-run
+spec:
+  serviceAccountName: cd-admin
+  pipelineRef:
+    name: alice
+  resources:
+    - name: source-repo
+      resourceRef:
+        name: alice-git
+    - name: alice-image
+      resourceRef:
+        name: alice-image
