@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: cephfs-pvc
+  name: nfs-pvc
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
-  storageClassName: rook-cephfs-test
+      storage: 10Gi
+  storageClassName: "nfs-registry-share"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -38,10 +38,11 @@ spec:
             # Configuration reference: https://docs.docker.com/registry/configuration/
             - name: REGISTRY_HTTP_ADDR
               value: :5000
-            - name: REGISTRY_HTTP_SECRET
-              value: "topsecret"
             - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
               value: /var/lib/registry
+            - name: REGISTRY_HTTP_SECRET
+              value: "topsecretvaluethatmustbechanged"
+
           volumeMounts:
             - name: image-store
               mountPath: /var/lib/registry
@@ -60,5 +61,5 @@ spec:
       volumes:
         - name: image-store
           persistentVolumeClaim:
-            claimName: cephfs-pvc
+            claimName: nfs-pvc
             readOnly: false

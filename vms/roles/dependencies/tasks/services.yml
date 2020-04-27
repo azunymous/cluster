@@ -8,3 +8,8 @@
   service:
     name: docker
     state: started
+
+- name: Start iscsid
+  service:
+    name: iscsid
+    state: started

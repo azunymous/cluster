@@ -4,4 +4,4 @@ metadata:
   name: config-artifact-pvc
   namespace: tekton-pipelines
 data:
-  storageClassName: rook-ceph-block-test
+  storageClassName: longhorn

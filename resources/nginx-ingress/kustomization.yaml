@@ -1,3 +1,4 @@
 resources:
   - nginx-0.30.0.yaml
   - nodeport.yaml
+  - nginx-config.yml

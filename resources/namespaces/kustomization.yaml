@@ -6,6 +6,8 @@ commonAnnotations:
 
 resources:
   - hello-world.yaml
+  - registry-nfs.yml
   - registry.yml
+  - media-nfs.yml
   - media-store.yaml
   - cd.yaml

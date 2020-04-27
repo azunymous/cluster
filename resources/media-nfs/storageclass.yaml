@@ -1,0 +1,13 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  labels:
+    app: media-nfs
+  name: nfs-media-share
+parameters:
+  exportName: media-share
+  nfsServerName: media-nfs
+  nfsServerNamespace: media-nfs
+provisioner: rook.io/nfs-provisioner
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
