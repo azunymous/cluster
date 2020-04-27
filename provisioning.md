@@ -59,7 +59,7 @@ requires setting up authentication.
 
 - Fix dns provisioning to be configured via global config and scanning master/nodes
 - Allow for multiple masters (high availability)
-
+- Switch back to CephFS and Rook after configuring correctly and understanding Ceph better
 ---
 ## Unused
 ## Rook cephfs storage

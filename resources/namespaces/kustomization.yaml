@@ -5,6 +5,7 @@ commonAnnotations:
   linkerd.io/inject: enabled
 
 resources:
+  - backups.yaml
   - hello-world.yaml
   - registry-nfs.yml
   - registry.yml
