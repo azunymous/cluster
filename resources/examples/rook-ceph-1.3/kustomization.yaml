@@ -1,8 +1,0 @@
-resources:
-  - common.yaml
-  - operator.yaml
-  - cluster-test.yaml
-  - filesystem-test.yaml
-  - storageclass-fs-test.yaml
-  - storageclass-test.yaml
-  - toolbox.yaml

@@ -5,7 +5,6 @@ service-account.json
 /.blackbox/pubring.kbx~
 /.blackbox/secring.gpg
 /resources/media-store/users.conf
-/resources/longhorn/auth
 /resources/cert-manager/issuer.yml
 /resources/cert-manager/issuer-prod.yml
 /resources/linkerd-support/auth

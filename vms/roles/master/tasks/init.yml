@@ -52,6 +52,24 @@
   until: create_result.rc == 0
   ignore_errors: true
 
+- name: Deploy Rook and Ceph CRDs 1.3
+  when: init_cluster is succeeded
+  command: |
+    kubectl --kubeconfig={{ kubeadmin_config }} \
+        apply -f https://raw.githubusercontent.com/rook/rook/release-1.3/cluster/examples/kubernetes/ceph/common.yaml
+  register: create_result
+  until: create_result.rc == 0
+  ignore_errors: true
+
+- name: Deploy Rook and Ceph Operator 1.3
+  when: init_cluster is succeeded
+  command: |
+    kubectl --kubeconfig={{ kubeadmin_config }} \
+        apply -f https://raw.githubusercontent.com/rook/rook/release-1.3/cluster/examples/kubernetes/ceph/operator.yaml
+  register: create_result
+  until: create_result.rc == 0
+  ignore_errors: true
+
 - name: Install linkerd CLI
   when: init_cluster is succeeded
   shell: "curl -sL https://run.linkerd.io/install | sh"

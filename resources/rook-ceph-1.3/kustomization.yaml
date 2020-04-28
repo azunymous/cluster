@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: rook-ceph
+
+resources:
+  - common.yaml
+  - operator.yaml
+  - cluster-test.yaml
+  - storageclass-block-test.yaml
+  - filesystem-test.yaml
+  - storageclass-filesystem.yml
+  - dashboard-ingress.yml
+  - toolbox.yaml
