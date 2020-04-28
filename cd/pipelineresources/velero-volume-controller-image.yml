@@ -1,0 +1,9 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: velero-volume-controller-image
+spec:
+  type: image
+  params:
+    - name: url
+      value: registry.vvv.run/velero-volume-controller:latest

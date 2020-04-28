@@ -6,7 +6,12 @@ resources:
   - tasks/echo-hello-world.yml
   - tasks/build-docker-from-git.yml
   - tasks/deploy-using-kubectl.yml
+  - tasks/deploy-using-kustomize.yml
   - pipelineresources/alice-git.yml
   - pipelineresources/alice-image.yml
+  - pipelineresources/velero-volume-controller-git.yml
+  - pipelineresources/velero-volume-controller-image.yml
   - pipeline/alice.yml
+  - pipeline/velero-volume-controller.yml
   - roles/cd-admin.yml
+

@@ -1,18 +1,12 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: deploy-using-kubectl
+  name: deploy-using-kustomize-kubectl
 spec:
   params:
     - name: path
       type: string
-      description: Path to the kubectl folder
-    - name: file
-      type: string
-      description: Deployment YAML filename (including extension)
-    - name: namespace
-      type: string
-      description: Namespace to deploy to
+      description: Path to the kustomize folder (containing a deployment.yaml)
     - name: yamlPathToImage
       type: string
       description: |
@@ -30,15 +24,19 @@ spec:
       args:
         - "w"
         - "-i"
-        - "$(params.path)/$(params.file)"
+        - "$(params.path)/deployment.yaml"
         - "$(params.yamlPathToImage)"
         - "$(resources.inputs.image.url)"
+    - name: kustomize-build
+      image: lyft/kustomizer:v3.3.0
+      script: |
+        kustomize build $1 > $1/out.yml
+      args:
+        - "$(params.path)"
     - name: run-kubectl
       image: lachlanevenson/k8s-kubectl
       command: ["kubectl"]
       args:
         - "apply"
-        - "-n"
-        - "$(params.namespace)"
         - "-f"
-        - "$(params.path)"
+        - "$(params.path)/out.yml"
