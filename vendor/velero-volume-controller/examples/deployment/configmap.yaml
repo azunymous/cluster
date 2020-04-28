@@ -10,7 +10,7 @@ data:
       leaseLockNamespace: velero
       leaseLockName: velero-volume-controller
     veleroVolumeCfg:
-      includeNamespaces: test
-      excludeNamespaces:
+      includeNamespaces:
+      excludeNamespaces: velero
       includeVolumeTypes: persistentVolumeClaim
       excludeVolumeTypes:
