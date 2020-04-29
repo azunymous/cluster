@@ -9,6 +9,8 @@ resources:
   - ingress.yaml
   - service.yaml
   - sftp.yaml
+  - jellyfin
+  - transmission
 
 secretGenerator:
   - name: sftp-config

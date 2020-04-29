@@ -55,19 +55,19 @@ afterward. This also requires disabling hsts if you create a certificate for you
 The, more proper solution is to use the DNS01 challenge feature of cert-manager. However, this 
 requires setting up authentication. 
 
----
-
-- Fix dns provisioning to be configured via global config and scanning master/nodes
-- Allow for multiple masters (high availability)
-- Switch back to CephFS and Rook after configuring correctly and understanding Ceph better
----
-## Unused
 ## Rook cephfs storage
 - Make sure you have a device attached for OSDs
 - It must not have a file system on it
 - The nodes should not have anything running on :9091
 
-### Rook cephfs shared file system PVCs not being provisioned:
 
-- To fix `kubectl delete pod -l app=csi-cephfsplugin-provisioner --grace-period=0 --force` restarts
-the provisioning pods and creates the PVC correctly
+---
+
+- Fix dns provisioning to be configured via global config and scanning master/nodes
+- Allow for multiple masters (high availability)
+
+- reduce containers running as root if possible
+
+- setup git syncing for vendored repos
+---
+

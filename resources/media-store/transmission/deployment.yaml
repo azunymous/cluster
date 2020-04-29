@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transmission
+  labels:
+    app: transmission
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      name: transmission
+      labels:
+        app: transmission
+    spec:
+      containers:
+        - name: transmission
+          image: linuxserver/transmission:amd64-2.94-r3-ls51
+          ports:
+            - containerPort: 9091
+          volumeMounts:
+            - mountPath: /downloads
+              name: media-store
+              subPath: downloads
+            - mountPath: /config
+              name: config
+            - mountPath: /config/settings.json
+              name: transmission-settings
+              subPath: settings.json
+      volumes:
+        - name: media-store
+          persistentVolumeClaim:
+            claimName: media-store
+        - name: config
+          persistentVolumeClaim:
+            claimName: transmission-config
+        - name: transmission-settings
+          secret:
+            secretName: transmission-settings
+  selector:
+    matchLabels:
+      app: transmission

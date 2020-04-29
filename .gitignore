@@ -14,3 +14,4 @@ service-account.json
 /resources/cert-manager/issuer-buypass.yml
 /resources/cert-manager/issuer-cloudflare.yml
 /resources/cert-manager/issuer-cloudflare-staging.yml
+/resources/media-store/transmission/settings.json

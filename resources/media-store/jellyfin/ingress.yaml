@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jellyfin
+spec:
+  rules:
+    - host: jellyfin.vvv.run
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: jellyfin
+              servicePort: 8096

@@ -5,6 +5,7 @@ resources/cert-manager/issuer-cloudflare.yml
 resources/cert-manager/issuer-prod.yml
 resources/cert-manager/issuer.yml
 resources/linkerd-support/auth
+resources/media-store/transmission/settings.json
 resources/media-store/users.conf
 resources/velero/restic.env
 resources/velero/velero.yml
