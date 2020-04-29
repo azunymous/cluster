@@ -4,7 +4,12 @@ metadata:
   name: example-ingress-subdomain
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    cert-manager.io/cluster-issuer: "letsencrypt-cloudflare-staging"
 spec:
+  tls:
+    - hosts:
+        - hello.vvv.run
+      secretName: subdomain-tls
   rules:
   - host: hello.vvv.run
     http:

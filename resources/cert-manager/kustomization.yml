@@ -4,4 +4,15 @@ kind: Kustomization
 resources:
   - cert-manager.yml
   - issuer.yml
-  - issuer-prod.yml
+  - issuer-cloudflare-staging.yml
+  - issuer-cloudflare.yml
+  - issuer-buypass.yml
+
+secretGenerator:
+  - name: cloudflare-api-token-secret
+    namespace: cert-manager
+    files:
+      - api-token
+
+generatorOptions:
+  disableNameSuffixHash: true
