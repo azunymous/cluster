@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - velero.yml
+  - cluster-backup.yaml
 
 secretGenerator:
   - name: velero-restic-credentials

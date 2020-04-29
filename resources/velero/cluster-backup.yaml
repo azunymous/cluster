@@ -1,0 +1,15 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: cluster
+  namespace: velero
+spec:
+  schedule: 0 3 * * 3
+  template:
+    hooks: {}
+    includedNamespaces:
+      - '*'
+    excludedNamespaces:
+      - 'velero'
+      - 'kube-system'
+    ttl: 2400h0m0s
