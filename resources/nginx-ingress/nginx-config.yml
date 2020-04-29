@@ -9,3 +9,7 @@ metadata:
 data:
   hsts: "false"
   hsts-include-subdomains: "false"
+
+  use-proxy-protocol: 'true'
+
+  whitelist-source-range: "10.0.0.0/16,192.168.0.0/16"

@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/part-of: ingress-nginx
 spec:
   type: NodePort
+#   This is needed for preserving client IP, but the nginx ingress server must be available on all nodes (aka daemonset)
+  externalTrafficPolicy: Local
   ports:
     - name: http
       port: 80
