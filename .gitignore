@@ -10,3 +10,7 @@ service-account.json
 /resources/linkerd-support/auth
 /resources/velero/velero.yml
 /resources/velero/restic.env
+/resources/cert-manager/api-token
+/resources/cert-manager/issuer-buypass.yml
+/resources/cert-manager/issuer-cloudflare.yml
+/resources/cert-manager/issuer-cloudflare-staging.yml

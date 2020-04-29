@@ -1,3 +1,7 @@
+resources/cert-manager/api-token
+resources/cert-manager/issuer-buypass.yml
+resources/cert-manager/issuer-cloudflare-staging.yml
+resources/cert-manager/issuer-cloudflare.yml
 resources/cert-manager/issuer-prod.yml
 resources/cert-manager/issuer.yml
 resources/linkerd-support/auth
