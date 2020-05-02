@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  labels:
+    app: bazarr
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      name: bazarr
+      labels:
+        app: bazarr
+    spec:
+      containers:
+        - name: bazarr
+          image: linuxserver/bazarr:latest
+          ports:
+            - containerPort: 6767
+          volumeMounts:
+            - mountPath: /movies
+              name: media-store
+              subPath: movies
+            - mountPath: /tv
+              name: media-store
+              subPath: tv
+            - mountPath: /config
+              name: config
+      volumes:
+        - name: media-store
+          persistentVolumeClaim:
+            claimName: media-store
+        - name: config
+          persistentVolumeClaim:
+            claimName: bazarr-config
+  selector:
+    matchLabels:
+      app: bazarr

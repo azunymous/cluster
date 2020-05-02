@@ -11,6 +11,8 @@ resources:
   - sftp.yaml
   - jellyfin
   - transmission
+  - radarr
+  - bazarr
 
 secretGenerator:
   - name: sftp-config

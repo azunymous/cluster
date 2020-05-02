@@ -12,6 +12,13 @@ spec:
       labels:
         app: sftp
     spec:
+      initContainers:
+        - name: add-ownership-media
+          image: busybox:1.28
+          command: ['sh', '-c', "chmod -R 777 /home/one/media"]
+          volumeMounts:
+            - name: store
+              mountPath: /home/one/media
       containers:
         - name: sftp
           image: atmoz/sftp

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  labels:
+    app: radarr
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      name: radarr
+      labels:
+        app: radarr
+    spec:
+      containers:
+        - name: radarr
+          image: linuxserver/radarr:amd64-0.2.0.1484-ls5
+          ports:
+            - containerPort: 7878
+          volumeMounts:
+            - mountPath: /downloads
+              name: media-store
+              subPath: downloads
+            - mountPath: /movies
+              name: media-store
+              subPath: movies
+            - mountPath: /config
+              name: config
+      volumes:
+        - name: media-store
+          persistentVolumeClaim:
+            claimName: media-store
+        - name: config
+          persistentVolumeClaim:
+            claimName: radarr-config
+  selector:
+    matchLabels:
+      app: radarr
