@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jackett
+  labels:
+    app: jackett
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      name: jackett
+      labels:
+        app: jackett
+    spec:
+      containers:
+        - name: jackett
+          image: linuxserver/jackett:amd64-latest
+          ports:
+            - containerPort: 9117
+          volumeMounts:
+            - mountPath: /downloads
+              name: media-store
+              subPath: downloads
+            - mountPath: /config
+              name: config
+      volumes:
+        - name: media-store
+          persistentVolumeClaim:
+            claimName: media-store
+        - name: config
+          persistentVolumeClaim:
+            claimName: jackett-config
+  selector:
+    matchLabels:
+      app: jackett

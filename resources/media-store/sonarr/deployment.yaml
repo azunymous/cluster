@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  labels:
+    app: sonarr
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      name: sonarr
+      labels:
+        app: sonarr
+    spec:
+      containers:
+        - name: sonarr
+          image: linuxserver/sonarr:amd64-latest
+          ports:
+            - containerPort: 8989
+          volumeMounts:
+            - mountPath: /downloads
+              name: media-store
+              subPath: downloads
+            - mountPath: /tv
+              name: media-store
+              subPath: tv
+            - mountPath: /config
+              name: config
+      volumes:
+        - name: media-store
+          persistentVolumeClaim:
+            claimName: media-store
+        - name: config
+          persistentVolumeClaim:
+            claimName: sonarr-config
+  selector:
+    matchLabels:
+      app: sonarr

@@ -12,6 +12,8 @@ resources:
   - jellyfin
   - transmission
   - radarr
+  - sonarr
+  - jackett
   - bazarr
 
 secretGenerator:

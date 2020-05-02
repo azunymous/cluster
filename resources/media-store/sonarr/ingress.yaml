@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sonarr
+spec:
+  rules:
+    - host: sonarr.vvv.run
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: sonarr
+              servicePort: 8989

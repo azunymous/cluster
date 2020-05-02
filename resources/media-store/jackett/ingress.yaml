@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jackett
+spec:
+  rules:
+    - host: jackett.vvv.run
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: jackett
+              servicePort: 9117
